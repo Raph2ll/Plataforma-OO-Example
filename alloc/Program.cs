@@ -3,6 +3,7 @@ using Storage;
 using Entities;
 using Chat;
 using Interfaces;
+using System.Runtime.CompilerServices;
 
 
 public class Program
@@ -15,18 +16,7 @@ public class Program
         //IStorage storage = CreateDatabaseStorage(logger);
         IChat chat = CreateChat(logger, storage);   
 
-        chat.SendMessage(new Message() { Text = "Hello", Author = "John" });
-        chat.SendMessage(new Message() { Text = "Hi", Author = "Jane" });
-        chat.SendMessage(new Message() { Text = "How are you?", Author = "John" });
-        chat.SendMessage(new Message() { Text = "Fine", Author = "Jane" });
-        chat.SendMessage(new Message() { Text = "Goodbye", Author = "John" });
-        chat.SendMessage(new Message() { Text = "Bye", Author = "Jane" });
-
-        var messages = chat.GetMessages();
-        foreach (var message in messages)
-        {
-            Console.WriteLine(message.ToJson());
-        }
+        Test(chat);
     }
 
     private static IStorage CreateFileStorage(ILogger logger)
@@ -75,6 +65,24 @@ public class Program
         IChat chat = new ChatService(storage);
         chat.Start(logger, chatConfig);
         return chat;
+    }
+
+    private static void Test(IChat chat)
+    {
+        Console.WriteLine($"> Send messages:");
+
+        chat.SendMessage(new Message() { Text = "Hello", Author = "John" });
+        chat.SendMessage(new Message() { Text = "Hi", Author = "Jane" });
+        chat.SendMessage(new Message() { Text = "How are you?", Author = "John" });
+        chat.SendMessage(new Message() { Text = "Fine", Author = "Jane" });
+        chat.SendMessage(new Message() { Text = "Goodbye", Author = "John" });
+        chat.SendMessage(new Message() { Text = "Bye", Author = "Jane" });
+
+        var messages = chat.GetMessages();
+        foreach (var message in messages)
+        {
+            Console.WriteLine($"> Message read: {message.ToJson()}");
+        }
     }
 }
 
