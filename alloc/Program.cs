@@ -8,11 +8,11 @@ using Interfaces;
 public class Program
 {
     public static void Main(string[] args)
-    {
-        ILogger logger = CreateFileLogger();        
-        //ILogger logger = CreateConsoleLogger();
-        //IStorage storage = CreateFileStorage(logger);
-        IStorage storage = CreateDatabaseStorage(logger);
+    {        
+        ILogger logger = CreateConsoleLogger();
+        IStorage storage = CreateFileStorage(logger);
+        //ILogger logger = CreateFileLogger();        
+        //IStorage storage = CreateDatabaseStorage(logger);
         IChat chat = CreateChat(logger, storage);   
 
         chat.SendMessage(new Message() { Text = "Hello", Author = "John" });
