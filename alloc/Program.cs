@@ -9,15 +9,16 @@ using System.Runtime.CompilerServices;
 public class Program
 {
     public static void Main(string[] args)
-    {        
-        ILogger logger = CreateConsoleLogger();
+    {
+        //ILogger logger = CreateConsoleLogger();
+        ILogger logger = SysLogger();
         //ILogger logger = DBFileLogger();
         //ILogger logger = CreateFileLogger();
-        
+
         IStorage storage = CreateFileStorage(logger);
         //IStorage storage = CreateDatabaseStorage(logger);
-        
-        IChat chat = CreateChat(logger, storage);   
+
+        IChat chat = CreateChat(logger, storage);
 
         Run(chat);
     }
@@ -43,9 +44,9 @@ public class Program
     #region Factory methods
     private static IStorage CreateFileStorage(ILogger logger)
     {
-        var storageConfig = new Dictionary<string,object>() { 
+        var storageConfig = new Dictionary<string, object>() {
             {"path", "data/"},
-            {"fileName", "data.json"} 
+            {"fileName", "data.json"}
         };
         IStorage storage = new FileStorage();
         storage.Start(logger, storageConfig);
@@ -54,7 +55,7 @@ public class Program
 
     private static IStorage CreateDatabaseStorage(ILogger logger)
     {
-        var storageConfig = new Dictionary<string,object>() { 
+        var storageConfig = new Dictionary<string, object>() {
             {"fileName", "data/messages.db"}
         };
         IStorage storage = new DBStorage();
@@ -64,15 +65,23 @@ public class Program
 
     private static ILogger CreateConsoleLogger()
     {
-        var loggerConfig = new Dictionary<string,object>();
+        var loggerConfig = new Dictionary<string, object>();
         ILogger logger = new ConsoleLogger();
         logger.Start(loggerConfig);
         return logger;
-    }    
-
+    }
+    private static ILogger SysLogger()
+    {
+        var loggerConfig = new Dictionary<string, object>() {
+                {"path", "../../dev"}
+            };
+        ILogger logger = new SysLogger();
+        logger.Start(loggerConfig);
+        return logger;
+    }
     private static ILogger CreateFileLogger()
-    {        
-        var loggerConfig = new Dictionary<string,object>() { 
+    {
+        var loggerConfig = new Dictionary<string, object>() {
             {"path", "data/logs.txt"}
         };
         ILogger logger = new FileLogger();
@@ -82,7 +91,7 @@ public class Program
 
     private static ILogger DBFileLogger()
     {
-        var loggerConfig = new Dictionary<string,object>() { 
+        var loggerConfig = new Dictionary<string, object>() {
             {"fileName", "data/logs.db"}
         };
         ILogger logger = new DBLogger();
@@ -92,7 +101,7 @@ public class Program
 
     private static IChat CreateChat(ILogger logger, IStorage storage)
     {
-        var chatConfig = new Dictionary<string,object>();
+        var chatConfig = new Dictionary<string, object>();
         IChat chat = new ChatService(storage);
         chat.Start(logger, chatConfig);
         return chat;
