@@ -40,7 +40,6 @@ public class Program
         }
     }
 
-
     #region Factory methods
     private static IStorage CreateFileStorage(ILogger logger)
     {
