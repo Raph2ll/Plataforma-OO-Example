@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "xKC0Oq1RjyHiVKP8EXZKeYxtsUTQqr248JrYFKemo8qxEnoeG+EM6gIpfyi1FqeX5t2H+RfclZh052GQO1Uh1Q==",
+  "success": true,
+  "projectFilePath": "/home/fino/git/Plataforma-OO-Example/alloc/alloc.csproj",
+  "expectedPackageFiles": [
+    "/home/fino/.nuget/packages/microsoft.data.sqlite/8.0.1/microsoft.data.sqlite.8.0.1.nupkg.sha512",
+    "/home/fino/.nuget/packages/microsoft.data.sqlite.core/8.0.1/microsoft.data.sqlite.core.8.0.1.nupkg.sha512",
+    "/home/fino/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/home/fino/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.6/sqlitepclraw.bundle_e_sqlite3.2.1.6.nupkg.sha512",
+    "/home/fino/.nuget/packages/sqlitepclraw.core/2.1.6/sqlitepclraw.core.2.1.6.nupkg.sha512",
+    "/home/fino/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.6/sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",
+    "/home/fino/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.6/sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512",
+    "/home/fino/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}

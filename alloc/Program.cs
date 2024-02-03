@@ -11,63 +11,18 @@ public class Program
     public static void Main(string[] args)
     {        
         ILogger logger = CreateConsoleLogger();
+        //ILogger logger = DBFileLogger();
+        //ILogger logger = CreateFileLogger();
+        
         IStorage storage = CreateFileStorage(logger);
-        //ILogger logger = CreateFileLogger();        
         //IStorage storage = CreateDatabaseStorage(logger);
+        
         IChat chat = CreateChat(logger, storage);   
 
-        Test(chat);
+        Run(chat);
     }
 
-    private static IStorage CreateFileStorage(ILogger logger)
-    {
-        var storageConfig = new Dictionary<string,object>() { 
-            {"path", "data/"},
-            {"fileName", "data.json"} 
-        };
-        IStorage storage = new FileStorage();
-        storage.Start(logger, storageConfig);
-        return storage;
-    }
-
-    private static IStorage CreateDatabaseStorage(ILogger logger)
-    {
-        var storageConfig = new Dictionary<string,object>() { 
-            {"connectionString", "Data Source=data/messages.db"}
-        };
-        IStorage storage = new DBStorage();
-        storage.Start(logger, storageConfig);
-        return storage;
-    }
-
-    private static ILogger CreateConsoleLogger()
-    {
-        var loggerConfig = new Dictionary<string,object>();
-        ILogger logger = new ConsoleLogger();
-        logger.Start(loggerConfig);
-        return logger;
-    }    
-
-    private static ILogger CreateFileLogger()
-    {
-        
-        var loggerConfig = new Dictionary<string,object>() { 
-            {"path", "data/logs.txt"}            
-        } ;        
-        ILogger logger = new FileLogger();
-        logger.Start(loggerConfig);
-        return logger;
-    }
-
-    private static IChat CreateChat(ILogger logger, IStorage storage)
-    {
-        var chatConfig = new Dictionary<string,object>();
-        IChat chat = new ChatService(storage);
-        chat.Start(logger, chatConfig);
-        return chat;
-    }
-
-    private static void Test(IChat chat)
+    private static void Run(IChat chat)
     {
         Console.WriteLine($"> Send messages:");
 
@@ -84,6 +39,66 @@ public class Program
             Console.WriteLine($"> Message read: {message.ToJson()}");
         }
     }
+
+
+    #region Factory methods
+    private static IStorage CreateFileStorage(ILogger logger)
+    {
+        var storageConfig = new Dictionary<string,object>() { 
+            {"path", "data/"},
+            {"fileName", "data.json"} 
+        };
+        IStorage storage = new FileStorage();
+        storage.Start(logger, storageConfig);
+        return storage;
+    }
+
+    private static IStorage CreateDatabaseStorage(ILogger logger)
+    {
+        var storageConfig = new Dictionary<string,object>() { 
+            {"fileName", "data/messages.db"}
+        };
+        IStorage storage = new DBStorage();
+        storage.Start(logger, storageConfig);
+        return storage;
+    }
+
+    private static ILogger CreateConsoleLogger()
+    {
+        var loggerConfig = new Dictionary<string,object>();
+        ILogger logger = new ConsoleLogger();
+        logger.Start(loggerConfig);
+        return logger;
+    }    
+
+    private static ILogger CreateFileLogger()
+    {        
+        var loggerConfig = new Dictionary<string,object>() { 
+            {"path", "data/logs.txt"}
+        };
+        ILogger logger = new FileLogger();
+        logger.Start(loggerConfig);
+        return logger;
+    }
+
+    private static ILogger DBFileLogger()
+    {
+        var loggerConfig = new Dictionary<string,object>() { 
+            {"fileName", "data/logs.db"}
+        };
+        ILogger logger = new DBLogger();
+        logger.Start(loggerConfig);
+        return logger;
+    }
+
+    private static IChat CreateChat(ILogger logger, IStorage storage)
+    {
+        var chatConfig = new Dictionary<string,object>();
+        IChat chat = new ChatService(storage);
+        chat.Start(logger, chatConfig);
+        return chat;
+    }
+    #endregion    
 }
 
 

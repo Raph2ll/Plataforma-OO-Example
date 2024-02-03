@@ -12,6 +12,7 @@ namespace Storage
         public IDictionary<string, object>? Config { get; private set; }
         
         private static string _connectionString = string.Empty;
+        private static string _fileName = string.Empty;
         private static SqliteConnection? _connection = null;
 
         private static SqliteConnection? GetConnection()
@@ -52,7 +53,16 @@ namespace Storage
                 throw new ArgumentNullException(nameof(logger));
             }
 
-            _connectionString = config["connectionString"] as string ?? "Data Source=messages.db";
+            _fileName = config["fileName"] as string ?? "messages.db";
+
+            string? dir = Path.GetDirectoryName(_fileName);
+
+            if (!Directory.Exists(dir) && !string.IsNullOrEmpty(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            _connectionString = $"Data Source={_fileName}";
             Config = config;
             Logger = logger;     
 

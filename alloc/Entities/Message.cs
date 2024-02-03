@@ -35,6 +35,7 @@ namespace Entities
             this.Author = message.Author;
             this.CreatedAt = message.CreatedAt;
             this.Text = message.Text;
+            this.Id = message.Id;
         }            
     }
 }

@@ -29,8 +29,17 @@ namespace Storage
             Logger = logger;
             Config = config;
 
+            if (!config.ContainsKey("path"))
+            {
+                throw new ArgumentException("path is required");
+            }            
             _path = (string)config["path"];
-            _fileName = (string)config["fileName"];                    
+
+            if (!config.ContainsKey("fileName"))
+            {
+                throw new ArgumentException("fileName is required");
+            }            
+            _fileName = (string)config["fileName"];
 
             Logger?.Log($"[{Name}] Starting with path: {_path} and fileName: {_fileName}");
         }
